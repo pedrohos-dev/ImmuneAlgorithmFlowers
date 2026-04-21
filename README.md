@@ -1,169 +1,169 @@
-# CLONALG - Iris Flower Classification using Immunological Algorithm
+# CLONALG - Classificação de Flores Iris usando Algoritmo Imunológico
 
-This project implements the **CLONALG (Clonal Selection Algorithm)** for solving the Iris flower classification problem. CLONALG is an immunological algorithm inspired by the biological immune system's ability to recognize and respond to antigens through clonal selection, mutation, and affinity maturation.
+Este projeto implementa o **CLONALG (Algoritmo de Seleção Clonal)** para resolver o problema de classificação de flores Iris. CLONALG é um algoritmo imunológico inspirado na capacidade do sistema imunológico biológico de reconhecer e responder a antígenos através de seleção clonal, mutação e maturação de afinidade.
 
-## Project Structure
+## Estrutura do Projeto
 
 ```
 ImmuneAlgorithmFlowers/
-├── clonalg.py                      # Core CLONALG implementation
-├── iris_classification.ipynb       # Main Jupyter notebook with full analysis
-├── population_analysis.py          # Standalone script for population size analysis
-├── README.md                       # This file
-└── *.png                          # Generated plots
+├── clonalg.py                      # Implementação central do CLONALG
+├── iris_classification.ipynb       # Notebook Jupyter principal com análise completa
+├── population_analysis.py          # Script autossuficiente para análise de tamanho de população
+├── README.md                       # Este arquivo
+└── *.png                          # Gráficos gerados
 ```
 
-## Files Description
+## Descrição dos Arquivos
 
 ### 1. `clonalg.py`
-Core implementation of the CLONALG algorithm with two main classes:
+Implementação central do algoritmo CLONALG com duas classes principais:
 
-- **`Antibody`**: Represents an antibody (solution candidate)
-  - `weights`: Feature weights representing the class prototype
-  - `affinity`: Fitness value (classification accuracy)
-  - `class_id`: Which class this antibody recognizes
+- **`Antibody`**: Representa um anticorpo (candidato de solução)
+  - `weights`: Pesos de características representando o protótipo da classe
+  - `affinity`: Valor de aptidão (acurácia de classificação)
+  - `class_id`: Qual classe este anticorpo reconhece
 
-- **`CLONALG`**: Main algorithm implementation
-  - `_initialize_population()`: Create initial random antibodies
-  - `_evaluate_population()`: Calculate fitness (affinity)
-  - `_selection()`: Select best M antibodies
-  - `_cloning()`: Clone antibodies proportionally to affinity
-  - `_hypermutation()`: Mutate clones inversely to affinity
-  - `_generate_new_antibodies()`: Add random antibodies for diversity
-  - `fit()`: Train the model
-  - `predict()`: Make predictions on new data
-  - `score()`: Calculate accuracy
+- **`CLONALG`**: Implementação principal do algoritmo
+  - `_initialize_population()`: Criar anticorpos aleatórios iniciais
+  - `_evaluate_population()`: Calcular aptidão (afinidade)
+  - `_selection()`: Selecionar os melhores M anticorpos
+  - `_cloning()`: Clonar anticorpos proporcionalmente à afinidade
+  - `_hypermutation()`: Mutar clones inversamente à afinidade
+  - `_generate_new_antibodies()`: Adicionar anticorpos aleatórios para diversidade
+  - `fit()`: Treinar o modelo
+  - `predict()`: Fazer previsões em novos dados
+  - `score()`: Calcular acurácia
 
 ### 2. `iris_classification.ipynb`
-Complete Jupyter notebook with:
+Notebook Jupyter completo com:
 
-1. **Import Required Libraries** - NumPy, Pandas, Scikit-learn, Matplotlib
-2. **Load and Prepare Iris Dataset** - Load data and split 70/30 train/test
-3. **Train CLONALG Model** - Train with population size 50, 50 generations
-4. **Evaluate Performance** - Test accuracy, precision, recall, confusion matrix
-5. **Analyze Accuracy Evolution** - Plot how accuracy improves across generations
-6. **Analyze Population Size Impact** - Test sizes 10-50, compare results
-7. **Summary and Conclusions** - Key findings and observations
+1. **Importar Bibliotecas Necessárias** - NumPy, Pandas, Scikit-learn, Matplotlib
+2. **Carregar e Preparar Dataset Iris** - Carregar dados e dividir 70/30 treino/teste
+3. **Treinar Modelo CLONALG** - Treinar com tamanho de população 50, 50 gerações
+4. **Avaliar Desempenho** - Acurácia de teste, precisão, recall, matriz de confusão
+5. **Analisar Evolução da Acurácia** - Gráfico de como a acurácia melhora entre gerações
+6. **Analisar Impacto do Tamanho da População** - Testar tamanhos 10-50, comparar resultados
+7. **Resumo e Conclusões** - Principais achados e observações
 
 ### 3. `population_analysis.py`
-Standalone Python script for quick analysis of population size impact without Jupyter.
+Script Python autossuficiente para análise rápida do impacto do tamanho da população sem Jupyter.
 
-## Algorithm Overview
+## Visão Geral do Algoritmo
 
-### CLONALG Steps:
+### Passos do CLONALG:
 
-1. **Initialization**: Create population of P random antibodies (one per class + random)
-2. **Evaluation**: Calculate fitness (affinity) for each antibody
-3. **Selection**: Select top M antibodies with highest affinity
-4. **Cloning**: Clone each selected antibody proportionally to its affinity
-   - Higher affinity → More clones
-5. **Hypermutation**: Mutate all clones inversely to affinity
-   - Lower affinity → Higher mutation rate
-6. **Metadynamics**: Replace worst antibodies with N new random ones
-7. **Loop**: Repeat steps 2-6 until stopping criterion
+1. **Inicialização**: Criar população de P anticorpos aleatórios (um por classe + aleatórios)
+2. **Avaliação**: Calcular aptidão (afinidade) para cada anticorpo
+3. **Seleção**: Selecionar os melhores M anticorpos com maior afinidade
+4. **Clonagem**: Clonar cada anticorpo selecionado proporcionalmente à sua afinidade
+   - Afinidade maior → Mais clones
+5. **Hipermutação**: Mutar todos os clones inversamente à afinidade
+   - Afinidade menor → Taxa de mutação maior
+6. **Metadinâmica**: Substituir piores anticorpos por N novos aleatórios
+7. **Loop**: Repetir passos 2-6 até critério de parada
 
-### Mathematical Formulas:
+### Fórmulas Matemáticas:
 
-**Number of clones for antibody k:**
+**Número de clones para o anticorpo k:**
 $$QC_k = \left(\frac{af_k}{\sum_{i=1}^{n} af_i}\right) \times CL$$
 
-**Mutation rate (inversely proportional to affinity):**
+**Taxa de mutação (inversamente proporcional à afinidade):**
 $$hyperAnt_k = (1 - \frac{afin_k}{afin_{max}}) \times \beta$$
 
-where:
-- `QC_k` = Number of clones for antibody k
-- `af_k` = Affinity of antibody k
-- `CL` = Total number of clones to generate
-- `hyperAnt_k` = Hypermutation rate
-- `afin_k` = Affinity of antibody k
-- `afin_max` = Maximum affinity in population
-- `β` = Mutation factor (typically 0.1 to 10)
+onde:
+- `QC_k` = Número de clones para o anticorpo k
+- `af_k` = Afinidade do anticorpo k
+- `CL` = Número total de clones a gerar
+- `hyperAnt_k` = Taxa de hipermutação
+- `afin_k` = Afinidade do anticorpo k
+- `afin_max` = Máxima afinidade na população
+- `β` = Fator de mutação (tipicamente 0.1 a 10)
 
-## Iris Dataset
+## Dataset Iris
 
-- **Samples**: 150 iris flowers
-- **Features**: 4 (sepal length, sepal width, petal length, petal width)
+- **Amostras**: 150 flores iris
+- **Características**: 4 (comprimento de sépala, largura de sépala, comprimento de pétala, largura de pétala)
 - **Classes**: 3 (setosa, versicolor, virginica)
-- **Split**: 70% training (105), 30% testing (45)
+- **Divisão**: 70% treinamento (105), 30% teste (45)
 
-## How to Use
+## Como Usar
 
-### Running the Jupyter Notebook:
+### Executando o Notebook Jupyter:
 
 ```bash
 jupyter notebook iris_classification.ipynb
 ```
 
-The notebook will:
-1. Train CLONALG with population size 50
-2. Display test and train accuracy
-3. Show confusion matrix and classification report
-4. Plot accuracy evolution across 50 generations
-5. Analyze impact of population sizes 10-50
-6. Generate visualizations
+O notebook irá:
+1. Treinar CLONALG com tamanho de população 50
+2. Exibir acurácia de teste e treinamento
+3. Mostrar matriz de confusão e relatório de classificação
+4. Traçar evolução da acurácia em 50 gerações
+5. Analisar impacto de tamanhos de população 10-50
+6. Gerar visualizações
 
-### Running the Population Analysis Script:
+### Executando o Script de Análise de População:
 
 ```bash
 python population_analysis.py
 ```
 
-This script will:
-1. Test population sizes from 10 to 50 (step 5)
-2. Train each for 50 generations
-3. Display results in a table
-4. Create comparison plots
-5. Save results as PNG
+Este script irá:
+1. Testar tamanhos de população de 10 a 50 (passo 5)
+2. Treinar cada um por 50 gerações
+3. Exibir resultados em uma tabela
+4. Criar gráficos de comparação
+5. Salvar resultados como PNG
 
-## Parameters
+## Parâmetros
 
-### Default CLONALG Parameters:
-- **Population Size (P)**: 50 antibodies
-- **Generations**: 50 iterations
-- **Classes**: 3 (Iris species)
-- **Features**: 4 (flower measurements)
-- **Beta (mutation factor)**: 1.0
+### Parâmetros Padrão do CLONALG:
+- **Tamanho da População (P)**: 50 anticorpos
+- **Gerações**: 50 iterações
+- **Classes**: 3 (espécies de Iris)
+- **Características**: 4 (medidas de flores)
+- **Beta (fator de mutação)**: 1.0
 
-### Configurable Parameters:
+### Parâmetros Configuráveis:
 ```python
 clonalg = CLONALG(
     population_size=50,    # M = population_size // 3
-    n_generations=50,      # Number of iterations
-    n_classes=3,          # Number of iris species
-    n_features=4,         # Number of features
-    beta=1.0              # Mutation rate factor
+    n_generations=50,      # Número de iterações
+    n_classes=3,          # Número de espécies de iris
+    n_features=4,         # Número de características
+    beta=1.0              # Fator de taxa de mutação
 )
 ```
 
-## Results and Performance
+## Resultados e Desempenho
 
-### Expected Results:
-- **Test Accuracy**: 85-95%
-- **Training Accuracy**: 90-98%
-- **Convergence**: Typically improves by generation 30-40
+### Resultados Esperados:
+- **Acurácia de Teste**: 85-95%
+- **Acurácia de Treinamento**: 90-98%
+- **Convergência**: Tipicamente melhora até a geração 30-40
 
-### Population Size Impact:
-- Larger populations → Better accuracy (more exploration)
-- Smaller populations → Faster but may get stuck
-- Trade-off between computational cost and quality
+### Impacto do Tamanho da População:
+- Populações maiores → Melhor acurácia (mais exploração)
+- Populações menores → Mais rápido mas pode ficar preso
+- Compromisso entre custo computacional e qualidade
 
-## Key Insights
+## Principais Insights
 
-1. **Cloning Strategy**: Proportional cloning based on fitness ensures high-quality solutions get more chances to improve
+1. **Estratégia de Clonagem**: Clonagem proporcional baseada em aptidão garante que soluções de alta qualidade tenham mais chances de melhorar
 
-2. **Mutation Control**: Inverse mutation rate prevents over-mutation of good solutions while maintaining exploration
+2. **Controle de Mutação**: Taxa de mutação inversa previne sobre-mutação de boas soluções enquanto mantém exploração
 
-3. **Diversity Maintenance**: Random antibody generation prevents premature convergence
+3. **Manutenção da Diversidade**: Geração de anticorpos aleatórios previne convergência prematura
 
-4. **Effective for Classification**: CLONALG successfully learns class boundaries through evolution
+4. **Eficaz para Classificação**: CLONALG aprende com sucesso limites de classe através de evolução
 
-## Generated Plots
+## Gráficos Gerados
 
-1. **accuracy_evolution.png**: Test and train accuracy across generations
-2. **population_size_impact.png**: Impact analysis with two views
-3. **population_size_analysis.png**: Standalone analysis results
+1. **accuracy_evolution.png**: Acurácia de teste e treino entre gerações
+2. **population_size_impact.png**: Análise de impacto com duas visualizações
+3. **population_size_analysis.png**: Resultados de análise autossuficiente
 
-## Requirements
+## Requisitos
 
 ```
 numpy>=1.19.0
@@ -175,29 +175,29 @@ scipy>=1.5.0
 jupyter>=1.0.0
 ```
 
-Install with:
+Instalar com:
 ```bash
 pip install numpy pandas scikit-learn matplotlib seaborn scipy jupyter
 ```
 
-## References
+## Referências
 
-The implementation is based on the CLONALG algorithm described in:
+A implementação é baseada no algoritmo CLONALG descrito em:
 
 de Castro, L. N., & Von Zuben, F. J. (2002). Learning and optimization in the immune system. 
 IEEE Transactions on Evolutionary Computation, 6(3), 239-251.
 
-## Notes
+## Notas
 
-- The algorithm uses Euclidean distance for classification
-- Antibodies are represented as weight vectors in feature space
-- Fitness is calculated based on classification accuracy
-- The algorithm maintains a steady-state population with elitism
+- O algoritmo usa distância Euclidiana para classificação
+- Anticorpos são representados como vetores de peso no espaço de características
+- Aptidão é calculada com base em acurácia de classificação
+- O algoritmo mantém uma população em estado estável com elitismo
 
-## Author
+## Autor
 
-Implementation for: Trabalho Prático 2 - Inteligência Artificial (5º Período)
+Implementação para: Trabalho Prático 2 - Inteligência Artificial (5º Período)
 
-## License
+## Licença
 
-Educational Use Only
+Somente Uso Educacional
